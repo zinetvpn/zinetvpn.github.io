@@ -270,6 +270,21 @@ main {
   color: var(--brand-dark);
   border-color: #fff;
 }
+.official-landing {
+  margin: 2rem 0;
+  padding: 1rem 1.2rem;
+  border-inline-start: 4px solid var(--brand);
+  border-radius: 0.8rem;
+  background: var(--surface);
+}
+.official-landing p {
+  margin: 0.25rem 0;
+}
+.official-landing a {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-weight: 800;
+}
 .faq details {
   border: 1px solid var(--line);
   border-radius: 0.8rem;

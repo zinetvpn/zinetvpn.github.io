@@ -1,0 +1,27 @@
+---
+import { websiteUrl, type OfficialLanding } from '../config/official-links';
+
+interface Props {
+  landing: OfficialLanding;
+  pageSlug: string;
+  label: string;
+  description: string;
+}
+
+const { landing, pageSlug, label, description } = Astro.props;
+---
+
+<aside class="official-landing" aria-label="صفحه مرتبط در سایت رسمی زی‌نت">
+  <p>
+    <strong>صفحه مرتبط در سایت رسمی زی‌نت</strong>
+  </p>
+  <p>{description}</p>
+  <a
+    href={websiteUrl(pageSlug, landing)}
+    rel="noopener"
+    data-event="cta_site_click"
+    data-landing={landing}
+  >
+    {label}
+  </a>
+</aside>

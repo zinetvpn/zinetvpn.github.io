@@ -27,5 +27,11 @@ for (const token of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'])
     bad = true;
   }
 }
+for (const landing of ['home', 'setup', 'android', 'iphone', 'windows']) {
+  if (!links.includes(`${landing}:`)) {
+    console.error(`missing official landing ${landing}`);
+    bad = true;
+  }
+}
 if (bad) process.exit(1);
 console.log('tracking: CTA ids and UTM builder valid');

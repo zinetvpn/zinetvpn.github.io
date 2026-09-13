@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { site } from '../config/site';
+import { botUrl, websiteUrl } from '../config/official-links';
+const guides = (await getCollection('guides', ({ data }) => data.status === 'published')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'ZiNet',
+    url: site.url,
+    sameAs: [websiteUrl('home').split('?')[0], botUrl('github_home').split('?')[0]],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'زی‌نت',
+    url: site.url,
+    inLanguage: 'fa',
+  },
+];
+---
+
+<BaseLayout title={site.name} description={site.description} schema={schema}>
+  <section class="hero container">
+    <span class="eyebrow">راهنماهای مستقل و ساده</span>
+    <h1>اتصال امن را ساده‌تر یاد بگیرید</h1>
+    <p>
+      راهنماهای فارسی زی‌نت برای انتخاب آگاهانه سرویس، دانلود برنامه از منبع رسمی و راه‌اندازی روی
+      دستگاه‌های مختلف.
+    </p>
+    <div class="actions">
+      <a class="button" href="#guides">
+        مشاهده راهنماها
+      </a>
+      <a
+        class="button secondary"
+        href={botUrl('github_home')}
+        data-event="cta_bot_click"
+        data-cta-id="github_home"
+      >
+        ربات رسمی زی‌نت
+      </a>
+    </div>
+  </section>
+  <section class="section container" id="guides">
+    <h2 class="section-title">از کجا شروع کنم؟</h2>
+    <div class="grid">
+      {guides.map((g) => (
+        <a class="card" href={`/${g.data.slug}/`}>
+          <h3>{g.data.title}</h3>
+          <p>{g.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="section reading">
+    <h2 class="section-title">این سایت چه کمکی می‌کند؟</h2>
+    <p>
+      اگر هنوز برنامه مناسب دستگاه خود را نمی‌شناسید، ابتدا راهنمای دانلود امن را بخوانید. اگر
+      برنامه را نصب کرده‌اید، راهنمای دستگاه شما مراحل افزودن لینک اشتراک، به‌روزرسانی و بررسی اتصال
+      را توضیح می‌دهد.
+    </p>
+    <p>
+      زی‌نت ناشر این مرکز آموزشی است. این سایت فروشگاه نیست، پرداخت یا صدور سرویس انجام نمی‌دهد و
+      شما را خودکار به مقصد دیگری منتقل نمی‌کند.
+    </p>
+  </section>
+</BaseLayout>

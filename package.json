@@ -1,0 +1,30 @@
+{
+  "name": "zinetvpn.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run validate && astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate": "node scripts/validate-content.mjs && node scripts/validate-links.mjs && node scripts/validate-tracking.mjs && node scripts/validate-build.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "playwright-core": "^1.63.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^1.0.0",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

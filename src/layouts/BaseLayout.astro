@@ -1,0 +1,78 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { site } from '../config/site';
+import { analytics, analyticsEnabled } from '../config/analytics';
+type Schema = Record<string, unknown>;
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  noindex = false,
+  schema = [],
+} = Astro.props as {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  noindex?: boolean;
+  schema?: Schema[];
+};
+const canonical = new URL(canonicalPath, site.url).toString();
+const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
+---
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content={site.brandColor} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    {schema.map((item) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(item)}></script>
+    ))}
+    {analyticsEnabled && (
+      <script
+        is:inline
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${analytics.measurementId}`}
+      ></script>
+    )}
+  </head>
+  <body>
+    <Header />
+    <main id="content">
+      <slot />
+    </main>
+    <Footer />
+    {analyticsEnabled && <script is:inline define:vars={{ measurementId: analytics.measurementId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', measurementId);
+      document.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-event]');
+        if (el)
+          gtag('event', el.dataset.event, {
+            cta_id: el.dataset.ctaId || '',
+            link_url: el.href || '',
+          });
+      });
+    </script>}
+  </body>
+</html>

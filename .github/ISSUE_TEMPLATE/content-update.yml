@@ -1,0 +1,12 @@
+name: به‌روزرسانی محتوا
+description: گزارش اطلاعات قدیمی یا نامفهوم
+title: 'content: '
+body:
+  - type: input
+    id: page
+    attributes: { label: نشانی صفحه }
+    validations: { required: true }
+  - type: textarea
+    id: details
+    attributes: { label: شرح و منبع پیشنهادی }
+    validations: { required: true }

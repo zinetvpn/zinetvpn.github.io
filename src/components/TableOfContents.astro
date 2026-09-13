@@ -1,0 +1,18 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+const { headings = [] } = Astro.props as { headings?: Heading[] };
+const visible = headings.filter((h) => h.depth === 2);
+---
+
+{visible.length > 0 && (
+  <nav class="toc" aria-label="فهرست مطلب">
+    <strong>در این راهنما</strong>
+    {visible.map((h) => (
+      <a href={`#${h.slug}`}>{h.text}</a>
+    ))}
+  </nav>
+)}

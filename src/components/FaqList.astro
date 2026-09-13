@@ -1,0 +1,19 @@
+---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+const { items = [] } = Astro.props as { items?: FaqItem[] };
+---
+
+{items.length > 0 && (
+  <section class="faq" aria-labelledby="faq-heading">
+    <h2 id="faq-heading">پرسش‌های پرتکرار</h2>
+    {items.map((item) => (
+      <details data-event="faq_open">
+        <summary>{item.question}</summary>
+        <p>{item.answer}</p>
+      </details>
+    ))}
+  </section>
+)}

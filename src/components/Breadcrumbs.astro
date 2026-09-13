@@ -1,0 +1,13 @@
+---
+const { current } = Astro.props;
+---
+
+<nav class="breadcrumbs container" aria-label="مسیر صفحه">
+  <ol>
+    <li>
+      <a href="/">خانه</a>
+    </li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">{current}</li>
+  </ol>
+</nav>

@@ -1,0 +1,73 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CallToAction from '../components/CallToAction.astro';
+import FaqList from '../components/FaqList.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import { site } from '../config/site';
+type Schema = Record<string, unknown>;
+type Faq = { question: string; answer: string };
+const { entry, headings } = Astro.props;
+const d = entry.data;
+const path = `/${d.slug}/`;
+const canonical = new URL(path, site.url).toString();
+const schema: Schema[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: d.title,
+    description: d.description,
+    datePublished: d.publishedAt.toISOString(),
+    dateModified: d.reviewedAt.toISOString(),
+    author: { '@type': 'Organization', name: 'ZiNet' },
+    publisher: { '@type': 'Organization', name: 'ZiNet' },
+    mainEntityOfPage: canonical,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'خانه', item: site.url },
+      { '@type': 'ListItem', position: 2, name: d.title, item: canonical },
+    ],
+  },
+];
+if (d.faqs.length)
+  schema.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: d.faqs.map((f: Faq) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  });
+---
+
+<BaseLayout
+  title={d.title}
+  description={d.description}
+  canonicalPath={path}
+  noindex={d.noindex}
+  schema={schema}
+>
+  <Breadcrumbs current={d.title} />
+  <header class="guide-header reading">
+    <span class="pill">راهنمای کاربردی</span>
+    <h1>{d.title}</h1>
+    <p class="lede">{d.description}</p>
+    <p class="meta">
+      منتشرشده توسط زی‌نت · آخرین بازبینی:{' '}
+      <time datetime={d.reviewedAt.toISOString()}>{d.reviewedAt.toLocaleDateString('fa-IR')}</time>
+    </p>
+  </header>
+  <div class="container article-layout">
+    <article class="prose">
+      <CallToAction ctaId={d.ctaId} />
+      <slot />
+      <FaqList items={d.faqs} />
+      <CallToAction ctaId={d.ctaId} heading="اگر برای ادامه به راهنمایی نیاز دارید" />
+    </article>
+    <TableOfContents headings={headings} />
+  </div>
+</BaseLayout>

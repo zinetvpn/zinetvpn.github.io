@@ -1,0 +1,12 @@
+name: لینک خراب
+description: گزارش پیوندی که باز نمی‌شود
+title: 'fix: broken link '
+body:
+  - type: input
+    id: page
+    attributes: { label: صفحه مبدأ }
+    validations: { required: true }
+  - type: input
+    id: link
+    attributes: { label: لینک خراب }
+    validations: { required: true }

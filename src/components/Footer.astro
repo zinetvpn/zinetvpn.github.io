@@ -1,0 +1,24 @@
+---
+import { websiteUrl, botUrl } from '../config/official-links';
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>زی‌نت</strong>
+      <p class="disclosure">
+        این وب‌سایت مرکز آموزشی منتشرشده توسط زی‌نت است. برخی پیوندها به کانال‌های تجاری رسمی زی‌نت
+        می‌روند؛ GitHub تأییدکننده یا حامی این خدمات نیست.
+      </p>
+    </div>
+    <div>
+      <a href={botUrl('github_footer')} data-event="cta_bot_click">
+        ربات رسمی
+      </a>{' '}
+      ·{' '}
+      <a href={websiteUrl('footer')} data-event="cta_site_click">
+        وب‌سایت رسمی
+      </a>
+    </div>
+  </div>
+</footer>

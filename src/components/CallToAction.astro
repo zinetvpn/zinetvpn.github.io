@@ -1,0 +1,22 @@
+---
+import { botUrl } from '../config/official-links';
+const {
+  ctaId,
+  heading = 'مسیر رسمی زی‌نت',
+  text = 'برای دریافت راهنمایی یا بررسی امکان تست، از ربات رسمی زی‌نت وارد شوید.',
+} = Astro.props;
+---
+
+<aside class="cta" aria-label="مسیر رسمی">
+  <h2>{heading}</h2>
+  <p>{text}</p>
+  <a
+    class="button"
+    href={botUrl(ctaId)}
+    rel="noopener"
+    data-event="cta_bot_click"
+    data-cta-id={ctaId}
+  >
+    ورود به ربات رسمی
+  </a>
+</aside>
